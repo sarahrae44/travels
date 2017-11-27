@@ -18,5 +18,15 @@
         </ul>
       </nav>
     </header>
+    <main>
+      <h2>List of Contributors</h2>
+      <ul>
+        <% for(let i = 0; i < contributors.length; i++){ %>
+          <li>
+          <a href="/contributors[i]._id%>"><%=contributors[i].name%></a>
+          </li>
+        <% } %>
+      </ul>
+    </main>
   </body>
 </html>
