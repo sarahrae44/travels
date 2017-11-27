@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>
+      <h1><%=post.name%></h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/posts">Posts Index</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <%=post.notes%>
+      </section>
+      <section>
+        <a href="/posts/<%=post._id%>/edit">Edit</a>
+      </section>
+      <section>
+        <form action="/posts/<%=post._id%>?_method=DELETE" method="post">
+          <input type="submit" value="Delete Post"/>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

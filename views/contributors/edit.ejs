@@ -6,7 +6,7 @@
   </head>
   <body>
     <header>
-      <h1>Create a Contributor</h1>
+      <h1>Edit <%=contributor.name%>'s Info</h1>
       <nav>
         <ul>
           <li>
@@ -19,9 +19,10 @@
       </nav>
     </header>
     <main>
-      <form action="/contributors" method="post">
-        Name: <input type="text" name="name" /><br />
-        <input type="submit" value="Create Contributor" />
+      <h2>Contributor Attributes:</h2>
+      <form action="/contributors/<%=contributor.id%>?_method=PUT" method="post">
+        <input type="text" name="name" value="<%=contributor.name%>"/><br/>
+        <input type="submit" value="Update Contributor"/>
       </form>
     </main>
   </body>

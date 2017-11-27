@@ -26,8 +26,11 @@
         </ul>
       </section>
       <section>
-        <form action="/contributors/<%=contributor._id%>?_method=DELETE" method="post">
-          <input type="submit" value="Delete Conributor"/>
+        <a href="/contributors/<%=contributor.id%>/edit">Edit this Contributor</a>
+      </section>
+      <section>
+        <form action="/contributors/<%=contributor.id%>?_method=DELETE" method="post">
+          <input type="submit" value="Delete this Contributor"/>
         </form>
       </section>
     </main>

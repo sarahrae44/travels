@@ -6,4 +6,4 @@ const contributorSchema = mongoose.Schema({
 
 const Contributor = mongoose.model('Contributor', contributorSchema);
 
-module.export = Contributor;
+module.exports = Contributor;
