@@ -25,6 +25,11 @@
           <li>Name: <%=contributor.name%></li>
         </ul>
       </section>
+      <section>
+        <form action="/contributors/<%=contributor._id%>?_method=DELETE" method="post">
+          <input type="submit" value="Delete Conributor"/>
+        </form>
+      </section>
     </main>
   </body>
 </html>
