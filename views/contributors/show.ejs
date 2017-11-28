@@ -26,6 +26,14 @@
         </ul>
       </section>
       <section>
+        <h2>Trips Taken By This Contributor:</h2>
+        <ul>
+          <% for(let i = 0; i < contributor.posts.length; i++){ %>
+          <li><a href="/posts/<%=contributor.posts[i]._id%>"><%=contributor.posts[i].name%></a></li>
+        <% } %>
+      </ul>
+    </section>
+    <section>
         <a href="/contributors/<%=contributor.id%>/edit">Edit this Contributor</a>
       </section>
       <section>

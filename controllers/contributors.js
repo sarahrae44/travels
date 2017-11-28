@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Contributor = require('../models/contributors.js');
+const Post = require('../models/posts.js');
 
 router.get('/', (req, res) => {
   Contributor.find({}, (err, foundContributors) => {
@@ -29,9 +30,22 @@ router.get('/:id/edit', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  Contributor.findByIdAndRemove(req.params.id, () => {
-    res.redirect('/contributors');
-  })
+  Contributor.findByIdAndRemove(req.params.id, (err, foundContributor) => {
+    const postIds = [];
+    for(let i = 0; i < foundContributor.posts.length; i++) {
+      postIds.push(foundContributor.posts[i]._id);
+    }
+    Post.remove(
+      {
+        _id: {
+          $in: postIds
+        }
+      },
+      (err, data) => {
+        res.redirect('/contributors');
+      }
+    );
+  });
 });
 
 router.get('/:id', (req, res) => {

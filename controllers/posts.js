@@ -42,22 +42,51 @@ router.get('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  Post.findByIdAndRemove(req.params.id, () => {
-    res.redirect('/posts');
+  Post.findByIdAndRemove(req.params.id, (err, foundPost) => {
+    Contributor.findOne({'posts._id':req.params.id}, (err, foundContributor) => {
+      foundContributor.posts.id(req,params.id).remove();
+      foundContributor.save((err, data) => {
+        res.redirect('/posts');
+      });
+    });
   });
 });
 
 router.get('/:id/edit', (req, res) => {
   Post.findById(req.params.id, (err, foundPost) => {
-    res.render('posts/edit.ejs', {
-      post: foundPost
+    Contributor.find({}, (err, allContributors) => {
+      Contributor.findOne({'posts._id': req.params.id}, (err, foundPostContributor) => {
+        res.render('posts/edit.ejs', {
+          post: foundPost,
+          contributors: allContributors,
+          postContributor: foundPostContributor
+        });
+      });
     });
   });
 });
 
 router.put('/:id', (req, res) => {
-  Post.findByIdAndUpdate(req.params.id, req.body, () => {
-    res.redirect('/posts');
+  Post.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedPost) => {
+    Contributor.findOne({'posts._id': req.params.id }, (err, foundContributor) => {
+      if(foundContributor._id.toString() !== req.body.contributorId) {
+        foundContributor.posts.id(req.params.id).remove();
+        foundContributor.save((err, savedFoundContributor) => {
+          Contributor.findById(req.body.contributorId, (err, newContributor) => {
+            newContributor.posts.push(updatedPost);
+            newContributor.save((err, savedNewContributor) => {
+              res.redirect('/posts/'+req.params.id);
+            });
+          });
+        });
+      } else {
+        foundContributor.posts.id(req.params.id).remove();
+        foundContributor.posts.push(updatedPost);
+        foundContributor.save((err, data) => {
+          res.redirect('/posts/'+req.params.id);
+        });
+      }
+    });
   });
 });
 

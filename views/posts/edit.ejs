@@ -21,7 +21,17 @@
     <main>
       <h2>Post Attributes:</h2>
       <form action="/posts/<%=post._id%>?_method=PUT" method="post">
-        
+        <select name="contributorId">
+          <% for(let i = 0; i < contributors.length; i++) { %>
+          <option value="<%=contributors[i]._id%>"
+            <% if(contributors[i]._id.toString() === postContributor._id.toString()){ %>
+                selected
+            <% } %>
+            >
+          <%=contributors[i].name%>
+          </option>
+        <% } %>
+        </select><br/>
       Name: <input type="text" name="name" value="<%=post.name%>"/><br />
       Date: <input type="text" name="date" value="<%=post.date%>"/><br/>
       <label class="notesLabel">Notes:</label> <textarea name="notes" /><%=post.notes%></textarea><br/>

@@ -18,7 +18,9 @@ app.get('/', (req, res) => {
   res.render('index.ejs');
 });
 
-mongoose.connect('mongodb://localhost:27017/travels');
+mongoose.connect('mongodb://localhost:27017/travels', {
+  useMongoClient: true
+});
 mongoose.connection.once('open', () => {
   console.log('connected to mongo');
 });
