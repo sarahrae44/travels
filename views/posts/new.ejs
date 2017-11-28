@@ -20,7 +20,11 @@
     </header>
     <main>
       <form action="/posts" method="post">
-
+        Contributor: <select name="contributorId">
+          <% for(let i = 0; i < contributors.length; i++) { %>
+          <option value="<%=contributors[i]._id%>"><%=contributors[i].name%></option>
+        <% } %>
+      </select><br/>
         Name: <input type="text" name="name" placeholder="Where did you go?" /><br/>
         Date: <input type="text" name="date" placeholder="Month Year" /><br/>
         <label class="notesLabel">Notes:</label> <textarea name="notes" /></textarea><br/>
