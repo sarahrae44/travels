@@ -11,22 +11,22 @@ router.get('/', (req, res) => {
   });
 });
 
+router.post('/', (req, res) => {
+  Contributor.create(req.body, (err, createdContributor) => {
+    res.redirect('/contributors');
+  })
+});
+
 router.get('/new', (req, res) => {
   res.render('contributors/new.ejs')
 });
 
-router.put('/:id', (req, res) => {
-  Contributor.findByIdAndUpdate(req.params.id, req.body, () => {
-    res.redirect('/contributors');
-  });
-});
-
-router.get('/:id/edit', (req, res) => {
+router.get('/:id', (req, res) => {
   Contributor.findById(req.params.id, (err, foundContributor) => {
-    res.render('contributors/edit.ejs', {
+    res.render('contributors/show.ejs', {
       contributor: foundContributor
     });
-  })
+  });
 });
 
 router.delete('/:id', (req, res) => {
@@ -48,18 +48,18 @@ router.delete('/:id', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id/edit', (req, res) => {
   Contributor.findById(req.params.id, (err, foundContributor) => {
-    res.render('contributors/show.ejs', {
+    res.render('contributors/edit.ejs', {
       contributor: foundContributor
-    })
+    });
   });
 });
 
-router.post('/', (req, res) => {
-  Contributor.create(req.body, (err, createdContributor) => {
+router.put('/:id', (req, res) => {
+  Contributor.findByIdAndUpdate(req.params.id, req.body, () => {
     res.redirect('/contributors');
-  })
+  });
 });
 
 module.exports = router;

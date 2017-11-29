@@ -4,11 +4,15 @@ const Post = require('../models/posts.js');
 const Contributor = require('../models/contributors.js')
 
 router.get('/', (req, res) => {
-  Post.find({}, (err, foundPosts) => {
-    res.render('posts/index.ejs', {
-      posts: foundPosts
-    });
-  })
+  if(req.session.logged){
+    Post.find({}, (err, foundPosts) => {
+      res.render('posts/index.ejs', {
+        posts: foundPosts
+      });
+    })
+  } else {
+    res.redirect('/sessions/login')
+  }
 });
 
 router.get('/new', (req, res) => {

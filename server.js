@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const assert = require('assert');
 const query = require('query');
+const session = require('express-session');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
@@ -16,12 +17,33 @@ app.use('/contributors', contributorsController);
 const postsController = require('./controllers/posts.js');
 app.use('/posts', postsController);
 
-const usersController = require('./controllers/users.js');
-app.use('/users', usersController)
+// const usersController = require('./controllers/users.js');
+// app.use('/users', usersController);
+
+const sessionsController = require('./controllers/sessions.js');
+app.use('/sessions', sessionsController);
 
 app.get('/', (req, res) => {
-  res.render('index.ejs');
+  res.render('index.ejs',
+//   {
+//     currentUser: req.session.currentuser
+//   }
+);
 });
+
+// app.get('/app', (req, res) => {
+//   if(req.session.currentuser){
+//     res.send('the party');
+//   } else {
+//     res.redirect('/sessions/new');
+//   }
+// });
+
+app.use(session({
+  secret: "randomsessionstring",
+  resave: false,
+  saveUnitialized: false
+}));
 
 mongoose.connect('mongodb://localhost:27017/travels', {
   useMongoClient: true
