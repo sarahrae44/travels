@@ -16,6 +16,9 @@ app.use('/contributors', contributorsController);
 const postsController = require('./controllers/posts.js');
 app.use('/posts', postsController);
 
+const usersController = require('./controllers/users.js');
+app.use('/users', usersController)
+
 app.get('/', (req, res) => {
   res.render('index.ejs');
 });
