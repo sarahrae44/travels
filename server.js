@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const assert = require('assert');
+const query = require('query');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
@@ -24,6 +26,8 @@ mongoose.connect('mongodb://localhost:27017/travels', {
 mongoose.connection.once('open', () => {
   console.log('connected to mongo');
 });
+mongoose.Promise = global.Promise;
+// assert.equal(query.exec().constructor, global.Promise);
 
 app.listen(3000, () => {
   console.log('listening...');
